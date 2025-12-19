@@ -1,0 +1,38 @@
+{
+  "incidents": [
+    {
+      "id": "INC-0012",
+      "title": "Broken glass near Library",
+      "description": "Large pieces of broken glass found near the main library entrance.",
+      "category": "hazard",
+      "status": "pending",
+      "severity": "high",
+      "location": "Main Library Entrance",
+      "reporter": "John Doe (S12345)",
+      "reported_at": "2025-12-18T10:30:00",
+      "latitude": 40.7128,
+      "longitude": -74.0060,
+      "evidence": ["glass1.jpg", "glass2.jpg"]
+    }
+  ],
+  "users": [
+    {
+      "id": "U001",
+      "name": "John Doe",
+      "email": "john.doe@student.edu",
+      "role": "student",
+      "status": "active",
+      "department": "Computer Science",
+      "incidents_reported": 12,
+      "last_login": "2025-12-18T10:30:00"
+    }
+  ],
+  "stats": {
+    "total_incidents": 124,
+    "pending_incidents": 23,
+    "total_users": 456,
+    "resolved_today": 8,
+    "avg_response_time": "2.4 hours",
+    "resolution_rate": "94.2%"
+  }
+}

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Campus Safety Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="sidebar">
+        <!-- Same sidebar -->
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Campus<span>Safety</span></h2>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
+            </div>
+            <div class="user-info">
+                <h4>Admin User</h4>
+                <p>Super Administrator</p>
+            </div>
+            <div class="user-status online"></div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li>
+                <a href="index.html">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="incidents.html">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Incidents</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="badge badge-info">456</span>
+                </a>
+            </li>
+            <li>
+                <a href="map.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Map View</span>
+                </a>
+            </li>
+            <li>
+                <a href="analytics.html">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="system-status">
+                <div class="status-indicator active"></div>
+                <span>System Online</span>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>User Management</h1>
+                <p class="subtitle">Manage user accounts and permissions</p>
+            </div>
+            
+            <div class="header-right">
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="inviteUserBtn">
+                        <i class="fas fa-envelope"></i> Invite User
+                    </button>
+                    <button class="btn btn-primary" id="addUserBtn">
+                        <i class="fas fa-user-plus"></i> Add User
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- User Statistics -->
+        <div class="stats-summary">
+            <div class="stat-summary">
+                <span class="stat-label">Total Users</span>
+                <span class="stat-value">456</span>
+            </div>
+            <div class="stat-summary">
+                <span class="stat-label">Active Today</span>
+                <span class="stat-value">128</span>
+            </div>
+            <div class="stat-summary">
+                <span class="stat-label">New This Week</span>
+                <span class="stat-value">42</span>
+            </div>
+            <div class="stat-summary">
+                <span class="stat-label">Verified</span>
+                <span class="stat-value">398</span>
+            </div>
+        </div>
+
+        <!-- User Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="allUsers">All Users</button>
+            <button class="tab-btn" data-tab="students">Students</button>
+            <button class="tab-btn" data-tab="staff">Staff</button>
+            <button class="tab-btn" data-tab="admins">Administrators</button>
+            <button class="tab-btn" data-tab="blocked">Blocked</button>
+        </div>
+
+        <!-- Users Table -->
+        <div class="content-card">
+            <div class="table-toolbar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="userSearch" placeholder="Search users...">
+                </div>
+                <div class="table-actions">
+                    <select id="userFilter">
+                        <option value="all">All Roles</option>
+                        <option value="student">Student</option>
+                        <option value="staff">Staff</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button class="btn-action" title="Export">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="data-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Incidents</th>
+                            <th>Last Active</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4F46E5&color=fff" 
+                                         alt="John Doe" class="user-avatar-small">
+                                    <div class="user-info-small">
+                                        <strong>John Doe</strong>
+                                        <small>john.doe@student.edu</small>
+                                        <span class="user-id">S12345</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="role-badge role-student">Student</span>
+                            </td>
+                            <td>
+                                <span class="user-status-badge active">Active</span>
+                            </td>
+                            <td>
+                                <div class="incident-count">
+                                    <span class="count">12</span>
+                                    <small>reported</small>
+                                </div>
+                            </td>
+                            <td>Today, 10:30 AM</td>
+                            <td>Sep 15, 2025</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-action" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-action" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-action" title="Message">
+                                        <i class="fas fa-envelope"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- More users loaded by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="table-footer">
+                <div class="table-info">
+                    Showing <span id="userShowingCount">10</span> of <span id="userTotalCount">456</span> users
+                </div>
+                <div class="pagination">
+                    <button class="page-btn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-numbers">1 of 46</span>
+                    <button class="page-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Detail Side Panel -->
+        <div class="side-panel" id="userDetailPanel">
+            <div class="side-panel-header">
+                <h4>User Details</h4>
+                <button class="side-panel-close">&times;</button>
+            </div>
+            <div class="side-panel-body">
+                <div class="user-detail-header">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4F46E5&color=fff&size=100" 
+                         alt="User" class="user-avatar-large">
+                    <h5 id="userDetailName">John Doe</h5>
+                    <p id="userDetailEmail">john.doe@student.edu</p>
+                    <div class="user-tags">
+                        <span class="user-tag verified">
+                            <i class="fas fa-check-circle"></i> Verified
+                        </span>
+                        <span class="user-tag student">
+                            <i class="fas fa-graduation-cap"></i> Student
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="user-detail-section">
+                    <h6><i class="fas fa-id-card"></i> Information</h6>
+                    <div class="detail-item">
+                        <span class="label">User ID:</span>
+                        <span class="value" id="detailUserId">S12345</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Department:</span>
+                        <span class="value" id="detailDepartment">Computer Science</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Phone:</span>
+                        <span class="value" id="detailPhone">+1 (555) 123-4567</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Campus:</span>
+                        <span class="value" id="detailCampus">Main Campus</span>
+                    </div>
+                </div>
+                
+                <div class="user-detail-section">
+                    <h6><i class="fas fa-chart-bar"></i> Activity</h6>
+                    <div class="user-stats">
+                        <div class="user-stat">
+                            <span class="stat-number" id="detailIncidents">12</span>
+                            <span class="stat-label">Incidents</span>
+                        </div>
+                        <div class="user-stat">
+                            <span class="stat-number" id="detailReports">8</span>
+                            <span class="stat-label">Reports</span>
+                        </div>
+                        <div class="user-stat">
+                            <span class="stat-number" id="detailResponses">4</span>
+                            <span class="stat-label">Responses</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Last Login:</span>
+                        <span class="value" id="detailLastLogin">Today, 10:30 AM</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Account Created:</span>
+                        <span class="value" id="detailCreated">Sep 15, 2025</span>
+                    </div>
+                </div>
+                
+                <div class="user-detail-section">
+                    <h6><i class="fas fa-shield-alt"></i> Permissions</h6>
+                    <div class="permissions-list">
+                        <label class="permission-item">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Can report incidents
+                        </label>
+                        <label class="permission-item">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Can upload evidence
+                        </label>
+                        <label class="permission-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            Can view all incidents
+                        </label>
+                        <label class="permission-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            Admin privileges
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="side-panel-footer">
+                <button class="btn btn-secondary" id="messageUserBtn">
+                    <i class="fas fa-envelope"></i> Message
+                </button>
+                <button class="btn btn-primary" id="editUserBtn">
+                    <i class="fas fa-edit"></i> Edit User
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userEmail">Email Address *</label>
+                        <input type="email" id="userEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userRole">Role *</label>
+                        <select id="userRole" required>
+                            <option value="">Select Role</option>
+                            <option value="student">Student</option>
+                            <option value="staff">Staff</option>
+                            <option value="faculty">Faculty</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userDepartment">Department</label>
+                        <input type="text" id="userDepartment">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userCampus">Campus</label>
+                        <select id="userCampus">
+                            <option value="main">Main Campus</option>
+                            <option value="north">North Campus</option>
+                            <option value="south">South Campus</option>
+                            <option value="east">East Campus</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Send Welcome Email</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="sendWelcomeEmail" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="saveUserBtn">Create User</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/users.js"></script>
+</body>
+</html>
