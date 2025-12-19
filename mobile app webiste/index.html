@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Sidebar Navigation -->
@@ -22,7 +23,7 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        
+
         <div class="sidebar-user">
             <div class="user-avatar">
                 <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
@@ -33,7 +34,7 @@
             </div>
             <div class="user-status online"></div>
         </div>
-        
+
         <ul class="sidebar-menu">
             <li class="active">
                 <a href="index.html">
@@ -74,7 +75,7 @@
                 </a>
             </li>
         </ul>
-        
+
         <div class="sidebar-footer">
             <div class="system-status">
                 <div class="status-indicator active"></div>
@@ -95,7 +96,7 @@
                 <h1>Dashboard Overview</h1>
                 <p class="subtitle">Welcome back! Here's what's happening today.</p>
             </div>
-            
+
             <div class="header-right">
                 <div class="date-display">
                     <i class="far fa-calendar"></i>
@@ -254,7 +255,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
-</body>
+    <script src="js/incidents.js"></script>
 </html>

@@ -1,4 +1,15 @@
 // Toggle password visibility
+
+const supabaseUrl = 'https://yacthiglkcipbltixron.supabase.co';
+const supabaseKey = 'sb_publishable_thHRqeO7TmSOhuWj9TgB4A_cAw4BwXB';
+
+// FIX: We use 'window.supabaseClient' to make sure other files can see it
+// and to avoid the "already declared" error.
+window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+console.log("Supabase Client initialized!")
+console.log("Supabase initialized");
+
 const togglePassword = document.getElementById('togglePassword');
 if (togglePassword) {
     togglePassword.addEventListener('click', function() {
@@ -82,13 +93,60 @@ if (notificationBtn) {
     });
 }
 
+async function sendNewsToApp() {
+    const title = document.getElementById('newsTitle')?.value;
+    const description = document.getElementById('newsDescription')?.value;
+
+    if (!title || !description) {
+        showNotification('Please provide both a title and description.', 'error');
+        return;
+    }
+
+    try {
+        const { data: reports, error } = await window.supabaseClient
+            .from('reports')
+            .select('*')
+            .order('created_at', { ascending: false });
+            .from('news')
+            .insert([
+                {
+                    title: title,
+                    description: description,
+                    created_at: new Date().toISOString()
+                }
+            ]);
+
+        if (error) throw error;
+
+        showNotification('News successfully published to the mobile app!', 'success');
+
+        // Optionally clear the form
+        document.getElementById('newsTitle').value = '';
+        document.getElementById('newsDescription').value = '';
+
+    } catch (error) {
+        console.error('Error sending news:', error);
+        showNotification('Failed to publish news.', 'error');
+    }
+}
+
 // Quick stats update (simulated)
-function updateStats() {
-    // Simulate updating stats
-    const stats = document.querySelectorAll('.stat-card h3');
-    if (stats.length > 0) {
-        // In real app, fetch from API and update
-        console.log('Updating stats...');
+async function updateStats() {
+    try {
+        const { data: reports, error } = await supabase.from('reports').select('*');
+        if (error) throw error;
+
+        // Update the dashboard stats with real counts from the database
+        const stats = document.querySelectorAll('.stat-card h3');
+        if (stats.length > 0 && reports) {
+            stats[0].textContent = reports.length; // Assuming the first card is "Total Incidents"
+
+            const pendingCount = reports.filter(r => r.status === 'Pending').length;
+            const pendingElement = document.getElementById('pendingCount');
+            if (pendingElement) pendingElement.textContent = pendingCount;
+        }
+    } catch (err) {
+        console.error('Error updating stats:', err);
     }
 }
 
@@ -115,3 +173,4 @@ if (logoutBtn) {
         }
     });
 }
+

@@ -6,6 +6,7 @@
     <title>Incident Management - Campus Safety Admin</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -20,7 +21,7 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        
+
         <div class="sidebar-user">
             <div class="user-avatar">
                 <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
@@ -31,7 +32,7 @@
             </div>
             <div class="user-status online"></div>
         </div>
-        
+
         <ul class="sidebar-menu">
             <li>
                 <a href="index.html">
@@ -71,7 +72,7 @@
                 </a>
             </li>
         </ul>
-        
+
         <div class="sidebar-footer">
             <div class="system-status">
                 <div class="status-indicator active"></div>
@@ -90,7 +91,7 @@
                 <h1>Incident Management</h1>
                 <p class="subtitle">Manage and track all campus safety incidents</p>
             </div>
-            
+
             <div class="header-right">
                 <div class="header-actions">
                     <button class="btn btn-secondary" id="filterBtn">
@@ -138,7 +139,7 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="filter-group">
                     <label>Severity</label>
                     <div class="filter-options">
@@ -159,7 +160,7 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="filter-group">
                     <label>Category</label>
                     <select id="categoryFilter" multiple>
@@ -173,7 +174,7 @@
                         <option value="other">Other</option>
                     </select>
                 </div>
-                
+
                 <div class="filter-group">
                     <label>Date Range</label>
                     <div class="date-range">
@@ -182,7 +183,7 @@
                         <input type="date" id="endDate">
                     </div>
                 </div>
-                
+
                 <div class="filter-actions">
                     <button class="btn btn-secondary" id="resetFilters">Reset</button>
                     <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
@@ -226,7 +227,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class="table-responsive">
                 <table class="data-table" id="incidentsTable">
                     <thead>
@@ -247,7 +248,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="table-footer">
                 <div class="table-info">
                     Showing <span id="showingCount">10</span> of <span id="totalCount">124</span> incidents
@@ -281,7 +282,7 @@
                             <span class="severity-badge severity-high">High</span>
                         </div>
                     </div>
-                    
+
                     <div class="detail-grid">
                         <div class="detail-section">
                             <h5><i class="fas fa-info-circle"></i> Information</h5>
@@ -306,19 +307,19 @@
                                 <span class="value" id="detailLocation">Main Library Entrance</span>
                             </div>
                         </div>
-                        
+
                         <div class="detail-section">
                             <h5><i class="fas fa-align-left"></i> Description</h5>
                             <p id="detailDescription">Large pieces of broken glass found near the main library entrance. Appears to be from a broken window. Area needs to be cordoned off for safety.</p>
                         </div>
-                        
+
                         <div class="detail-section">
                             <h5><i class="fas fa-images"></i> Evidence</h5>
                             <div class="evidence-gallery" id="evidenceGallery">
                                 <!-- Images loaded by JavaScript -->
                             </div>
                         </div>
-                        
+
                         <div class="detail-section">
                             <h5><i class="fas fa-history"></i> Activity Log</h5>
                             <div class="activity-log" id="activityLog">
@@ -381,6 +382,8 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="js/app.js"></script>
     <script src="js/incidents.js"></script>
