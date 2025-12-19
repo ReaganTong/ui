@@ -11,7 +11,6 @@
 </head>
 <body>
     <nav class="sidebar">
-        <!-- Same sidebar as dashboard -->
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
@@ -34,43 +33,14 @@
         </div>
 
         <ul class="sidebar-menu">
-            <li>
-                <a href="index.html">
-                    <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="incidents.html">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>Incidents</span>
-                    <span class="badge badge-danger" id="sidebarBadge">0</span>
-                </a>
-            </li>
-            <li>
-                <a href="users.html">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span>
-                </a>
-            </li>
-            <li>
-                <a href="map.html">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span>Map View</span>
-                </a>
-            </li>
-            <li>
-                <a href="analytics.html">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
-                </a>
-            </li>
-            <li>
-                <a href="settings.html">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+            <li class="active"><a href="incidents.html"><i class="fas fa-exclamation-triangle"></i><span>Incidents</span></a></li>
+            <li><a href="users.html"><i class="fas fa-users"></i><span>Users</span></a></li>
+            <li><a href="map.html"><i class="fas fa-map-marked-alt"></i><span>Map View</span></a></li>
+            <li><a href="news.html"><i class="fas fa-bullhorn"></i><span>News & Alerts</span></a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+            <li><a href="reports.html"><i class="fas fa-file-download"></i><span>Reports & Export</span></a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
         </ul>
 
         <div class="sidebar-footer">
@@ -97,17 +67,13 @@
                     <button class="btn btn-secondary" id="filterBtn">
                         <i class="fas fa-filter"></i> Filters
                     </button>
-                    <button class="btn btn-primary" id="newIncidentBtn">
-                        <i class="fas fa-plus"></i> New Incident
-                    </button>
                     <button class="btn btn-export" id="exportBtn">
-                        <i class="fas fa-download"></i> Export
+                        <i class="fas fa-download"></i> Export CSV
                     </button>
                 </div>
             </div>
         </header>
 
-        <!-- Filter Panel -->
         <div class="filter-panel" id="filterPanel">
             <div class="filter-header">
                 <h4>Filter Incidents</h4>
@@ -119,23 +85,19 @@
                     <div class="filter-options">
                         <label class="filter-checkbox">
                             <input type="checkbox" name="status" value="pending" checked>
-                            <span class="checkmark"></span>
-                            Pending
+                            <span class="checkmark"></span> Pending
                         </label>
                         <label class="filter-checkbox">
-                            <input type="checkbox" name="status" value="investigating">
-                            <span class="checkmark"></span>
-                            Investigating
+                            <input type="checkbox" name="status" value="investigating" checked>
+                            <span class="checkmark"></span> Investigating
                         </label>
                         <label class="filter-checkbox">
-                            <input type="checkbox" name="status" value="resolved">
-                            <span class="checkmark"></span>
-                            Resolved
+                            <input type="checkbox" name="status" value="resolved" checked>
+                            <span class="checkmark"></span> Resolved
                         </label>
                         <label class="filter-checkbox">
-                            <input type="checkbox" name="status" value="closed">
-                            <span class="checkmark"></span>
-                            Closed
+                            <input type="checkbox" name="status" value="closed" checked>
+                            <span class="checkmark"></span> Closed
                         </label>
                     </div>
                 </div>
@@ -144,19 +106,16 @@
                     <label>Severity</label>
                     <div class="filter-options">
                         <label class="filter-checkbox">
-                            <input type="checkbox" name="severity" value="high">
-                            <span class="checkmark"></span>
-                            High
+                            <input type="checkbox" name="severity" value="high" checked>
+                            <span class="checkmark"></span> High
                         </label>
                         <label class="filter-checkbox">
                             <input type="checkbox" name="severity" value="medium" checked>
-                            <span class="checkmark"></span>
-                            Medium
+                            <span class="checkmark"></span> Medium
                         </label>
                         <label class="filter-checkbox">
-                            <input type="checkbox" name="severity" value="low">
-                            <span class="checkmark"></span>
-                            Low
+                            <input type="checkbox" name="severity" value="low" checked>
+                            <span class="checkmark"></span> Low
                         </label>
                     </div>
                 </div>
@@ -168,8 +127,7 @@
                         <option value="security">Security</option>
                         <option value="maintenance">Maintenance</option>
                         <option value="theft">Theft</option>
-                        <option value="assault">Assault</option>
-                        <option value="fire">Fire Safety</option>
+                        <option value="fire">Fire</option>
                         <option value="medical">Medical</option>
                         <option value="other">Other</option>
                     </select>
@@ -191,7 +149,6 @@
             </div>
         </div>
 
-        <!-- Incident Statistics -->
         <div class="stats-summary">
             <div class="stat-summary">
                 <span class="stat-label">Total Incidents</span>
@@ -211,7 +168,6 @@
             </div>
         </div>
 
-        <!-- Incidents Table -->
         <div class="content-card">
             <div class="table-toolbar">
                 <div class="search-box">
@@ -219,11 +175,8 @@
                     <input type="text" id="incidentSearch" placeholder="Search incidents...">
                 </div>
                 <div class="table-actions">
-                    <button class="btn-action" title="Refresh" id="refreshTable">
+                    <button class="btn-action" title="Refresh" onclick="location.reload()">
                         <i class="fas fa-sync-alt"></i>
-                    </button>
-                    <button class="btn-action" title="Bulk Actions">
-                        <i class="fas fa-ellipsis-v"></i>
                     </button>
                 </div>
             </div>
@@ -244,29 +197,18 @@
                         </tr>
                     </thead>
                     <tbody id="incidentsTableBody">
-                        <!-- Incidents loaded by JavaScript -->
                     </tbody>
                 </table>
             </div>
 
             <div class="table-footer">
                 <div class="table-info">
-                    Showing <span id="showingCount">10</span> of <span id="totalCount">124</span> incidents
-                </div>
-                <div class="pagination">
-                    <button class="page-btn" disabled>
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <span class="page-numbers">1 of 13</span>
-                    <button class="page-btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
+                    Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> incidents
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Incident Detail Modal -->
     <div class="modal modal-lg" id="incidentDetailModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -276,116 +218,62 @@
             <div class="modal-body">
                 <div class="incident-detail">
                     <div class="detail-header">
-                        <h4 id="detailTitle">Broken glass near Library</h4>
-                        <div class="detail-status">
-                            <span class="status-badge status-pending">Pending</span>
-                            <span class="severity-badge severity-high">High</span>
-                        </div>
+                        <h4 id="detailTitle">...</h4>
+                        <div class="detail-status" id="detailStatusBadge"></div>
                     </div>
 
                     <div class="detail-grid">
                         <div class="detail-section">
                             <h5><i class="fas fa-info-circle"></i> Information</h5>
-                            <div class="detail-item">
-                                <span class="label">ID:</span>
-                                <span class="value" id="detailId">#INC-0012</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="label">Category:</span>
-                                <span class="value" id="detailCategory">Hazard</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="label">Reported By:</span>
-                                <span class="value" id="detailReporter">John Doe (S12345)</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="label">Reported On:</span>
-                                <span class="value" id="detailDate">Dec 18, 2025 10:30 AM</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="label">Location:</span>
-                                <span class="value" id="detailLocation">Main Library Entrance</span>
-                            </div>
+                            <div class="detail-item"><span class="label">ID:</span><span class="value" id="detailId">...</span></div>
+                            <div class="detail-item"><span class="label">Category:</span><span class="value" id="detailCategory">...</span></div>
+                            <div class="detail-item"><span class="label">Reported By:</span><span class="value" id="detailReporter">...</span></div>
+                            <div class="detail-item"><span class="label">Reported On:</span><span class="value" id="detailDate">...</span></div>
                         </div>
-
                         <div class="detail-section">
                             <h5><i class="fas fa-align-left"></i> Description</h5>
-                            <p id="detailDescription">Large pieces of broken glass found near the main library entrance. Appears to be from a broken window. Area needs to be cordoned off for safety.</p>
+                            <p id="detailDescription">...</p>
                         </div>
-
                         <div class="detail-section">
                             <h5><i class="fas fa-images"></i> Evidence</h5>
-                            <div class="evidence-gallery" id="evidenceGallery">
-                                <!-- Images loaded by JavaScript -->
-                            </div>
-                        </div>
-
-                        <div class="detail-section">
-                            <h5><i class="fas fa-history"></i> Activity Log</h5>
-                            <div class="activity-log" id="activityLog">
-                                <!-- Activity loaded by JavaScript -->
-                            </div>
+                            <div class="evidence-gallery" id="evidenceGallery"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="assignToMeBtn">
-                    <i class="fas fa-user-check"></i> Assign to Me
-                </button>
-                <button class="btn btn-primary" id="updateStatusBtn">
-                    <i class="fas fa-edit"></i> Update Status
-                </button>
-                <button class="btn btn-danger" id="deleteIncidentBtn">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Update Status Modal -->
-    <div class="modal" id="updateStatusModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Update Incident Status</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="statusUpdateForm">
-                    <div class="form-group">
-                        <label for="newStatus">New Status</label>
-                        <select id="newStatus">
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; background: #f9fafb; padding: 20px; border-top: 1px solid #eee;">
+                <div class="status-control" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase;">Status</label>
+                        <select id="modalStatusSelect" style="padding: 8px; border-radius: 6px; border: 1px solid #ddd; min-width: 130px;">
                             <option value="pending">Pending</option>
                             <option value="investigating">Investigating</option>
                             <option value="resolved">Resolved</option>
                             <option value="closed">Closed</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="statusNotes">Notes</label>
-                        <textarea id="statusNotes" rows="3" placeholder="Add notes about status change..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="assignTo">Assign To</label>
-                        <select id="assignTo">
-                            <option value="">Unassigned</option>
-                            <option value="admin">Admin User</option>
-                            <option value="security">Security Team</option>
-                            <option value="maintenance">Maintenance</option>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase;">Severity</label>
+                        <select id="modalSeveritySelect" style="padding: 8px; border-radius: 6px; border: 1px solid #ddd; min-width: 130px;">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
                         </select>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary modal-close">Cancel</button>
-                <button class="btn btn-primary" id="saveStatusBtn">Update Status</button>
+                    <button class="btn btn-primary" id="saveChangesBtn" style="height: 38px; margin-top: 20px;">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+                <button class="btn btn-danger" id="modalDeleteBtn" style="height: 38px; margin-top: 20px;">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="js/app.js"></script>
-<script src="js/incidents.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/incidents.js"></script>
 </body>
 </html>

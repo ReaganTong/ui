@@ -11,7 +11,7 @@
 <body class="login-page">
     <div class="login-container">
         <div class="login-card">
-            <!-- Left Panel -->
+
             <div class="login-left">
                 <div class="brand-logo">
                     <i class="fas fa-shield-alt"></i>
@@ -25,30 +25,27 @@
                     <p>Manage campus safety incidents and reports securely</p>
                 </div>
                 <div class="login-footer">
-                    <p><i class="fas fa-info-circle"></i> Contact support if you forgot your credentials</p>
+                    <p><i class="fas fa-info-circle"></i> Authorized personnel only</p>
                 </div>
             </div>
-            
-            <!-- Right Panel (Login Form) -->
+
             <div class="login-right">
                 <div class="login-form-container">
                     <div class="form-header">
                         <h3>Welcome Back</h3>
                         <p>Sign in to your administrator account</p>
                     </div>
-                    
+
+                    <div id="loginAlert" class="alert alert-error" style="display: none;"></div>
+
                     <form id="loginForm" class="login-form">
                         <div class="input-group">
-                            <label for="email">
-                                <i class="fas fa-envelope"></i> Email Address
-                            </label>
-                            <input type="email" id="email" placeholder="admin@campus.edu" required>
+                            <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="email" placeholder="admin@campussafety.com" required>
                         </div>
-                        
+
                         <div class="input-group">
-                            <label for="password">
-                                <i class="fas fa-lock"></i> Password
-                            </label>
+                            <label for="password"><i class="fas fa-lock"></i> Password</label>
                             <div class="password-wrapper">
                                 <input type="password" id="password" placeholder="Enter your password" required>
                                 <button type="button" class="toggle-password" id="togglePassword">
@@ -56,37 +53,39 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                         <div class="form-options">
                             <label class="checkbox-container">
                                 <input type="checkbox" id="rememberMe">
                                 <span class="checkmark"></span>
                                 Remember me
                             </label>
-                            <a href="#" class="forgot-password">Forgot Password?</a>
+                            <a href="#" onclick="alert('Please contact IT support to reset your admin password.')" class="forgot-password">Forgot Password?</a>
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-login">
+
+                        <button type="submit" class="btn btn-primary btn-login" id="loginBtn">
                             <i class="fas fa-sign-in-alt"></i> Sign In
                         </button>
-                        
+
                         <div class="login-divider">
                             <span>or</span>
                         </div>
-                        
-                        <button type="button" class="btn btn-google">
+
+                        <button type="button" class="btn btn-google" onclick="alert('Google Sign-in not configured yet')">
                             <i class="fab fa-google"></i> Sign in with Google
                         </button>
                     </form>
-                    
+
                     <div class="login-note">
-                        <p><i class="fas fa-exclamation-triangle"></i> This portal is for authorized personnel only.</p>
+                        <p><i class="fas fa-lock"></i> Secured by Supabase Authentication</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

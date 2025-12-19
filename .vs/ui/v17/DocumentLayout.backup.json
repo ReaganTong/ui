@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "E:\\gh\\ui\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\gh\\ui\\mobile app webiste\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mobile app webiste\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\gh\\ui\\mobile app webiste\\js\\incidents.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mobile app webiste\\js\\incidents.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\gh\\ui\\mobile app webiste\\incidents.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mobile app webiste\\incidents.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\gh\\ui\\mobile app webiste\\js\\incidents.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mobile app webiste\\js\\incidents.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\gh\\ui\\mobile app webiste\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mobile app webiste\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\gh\\ui\\mobile app webiste\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -54,8 +54,7 @@
               "RelativeToolTip": "mobile app webiste\\users.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-12-19T14:39:52.726Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-19T14:39:52.726Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "mobile app webiste\\settings.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-12-19T14:39:52.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-19T14:39:52.08Z"
             },
             {
               "$type": "Document",
@@ -78,33 +76,33 @@
               "RelativeDocumentMoniker": "mobile app webiste\\incidents.html",
               "ToolTip": "E:\\gh\\ui\\mobile app webiste\\incidents.html",
               "RelativeToolTip": "mobile app webiste\\incidents.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAwCsAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-12-19T14:35:32.617Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "app.js",
               "DocumentMoniker": "E:\\gh\\ui\\mobile app webiste\\js\\app.js",
               "RelativeDocumentMoniker": "mobile app webiste\\js\\app.js",
               "ToolTip": "E:\\gh\\ui\\mobile app webiste\\js\\app.js",
               "RelativeToolTip": "mobile app webiste\\js\\app.js",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAjwGwAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-12-19T14:30:28.523Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "incidents.js",
               "DocumentMoniker": "E:\\gh\\ui\\mobile app webiste\\js\\incidents.js",
               "RelativeDocumentMoniker": "mobile app webiste\\js\\incidents.js",
               "ToolTip": "E:\\gh\\ui\\mobile app webiste\\js\\incidents.js",
               "RelativeToolTip": "mobile app webiste\\js\\incidents.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAcwIAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-12-19T11:49:20.413Z",
               "EditorCaption": ""
@@ -119,8 +117,7 @@
               "RelativeToolTip": "mobile app webiste\\js\\config.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-12-19T11:49:08.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-19T11:49:08.146Z"
             },
             {
               "$type": "Document",
@@ -132,8 +129,7 @@
               "RelativeToolTip": "mobile app webiste\\js\\NewFile",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-12-19T11:48:48.653Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-19T11:48:48.653Z"
             },
             {
               "$type": "Document",
@@ -145,8 +141,7 @@
               "RelativeToolTip": "mobile app webiste\\index.html",
               "ViewState": "AgIAAOQAAAAAAAAAAAAAAAQBAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-12-19T11:48:23.454Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-19T11:48:23.454Z"
             }
           ]
         }

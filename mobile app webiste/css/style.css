@@ -1995,3 +1995,699 @@ body {
         justify-content: center;
     }
 }
+
+/* =========================================
+   BEAUTIFUL FILTER PANEL
+   ========================================= */
+
+/* The Panel Container (Hidden by default) */
+.filter-panel {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Hide off-screen */
+    width: 380px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px); /* Glass Effect */
+    box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+    z-index: 1000;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth slide */
+    display: flex;
+    flex-direction: column;
+}
+
+    /* When Active (Slide in) */
+    .filter-panel.active {
+        right: 0;
+    }
+
+/* Header */
+.filter-header {
+    padding: 25px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+}
+
+    .filter-header h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #111827;
+        font-weight: 600;
+    }
+
+.filter-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #6B7280;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+    .filter-close:hover {
+        color: #EF4444;
+    }
+
+/* Content Area */
+.filter-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+/* Filter Groups */
+.filter-group {
+    margin-bottom: 25px;
+}
+
+    .filter-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 12px;
+        color: #374151;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+/* Custom Checkboxes */
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #4B5563;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+    .filter-checkbox:hover {
+        background: #F3F4F6;
+    }
+
+    .filter-checkbox input {
+        margin-right: 12px;
+        width: 18px;
+        height: 18px;
+        accent-color: #4F46E5; /* Brand color checkmark */
+    }
+
+/* Date Inputs */
+.date-range {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .date-range input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #E5E7EB;
+        border-radius: 6px;
+        font-family: inherit;
+        color: #374151;
+    }
+
+/* Select Box */
+#categoryFilter {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    background-color: white;
+    height: 120px; /* Height for multiple select */
+}
+
+/* Bottom Actions */
+.filter-actions {
+    padding: 20px 25px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 15px;
+}
+
+    .filter-actions .btn {
+        flex: 1;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: transform 0.1s;
+    }
+
+        .filter-actions .btn:active {
+            transform: scale(0.98);
+        }
+
+    .filter-actions .btn-primary {
+        background: #4F46E5;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+    }
+
+    .filter-actions .btn-secondary {
+        background: white;
+        border: 1px solid #E5E7EB;
+        color: #374151;
+    }
+
+        .filter-actions .btn-secondary:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+/* =========================================
+   1. SLIDING FILTER PANEL (The Missing Piece)
+   ========================================= */
+.filter-panel {
+    position: fixed; /* Fixes it to the screen */
+    top: 0;
+    right: -450px; /* Hide off-screen by default */
+    width: 400px;
+    height: 100vh; /* Full height */
+    background: rgba(255, 255, 255, 0.95); /* White with slight transparency */
+    backdrop-filter: blur(10px); /* Glass blur effect */
+    box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+    z-index: 2000; /* On top of everything */
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth slide */
+    display: flex;
+    flex-direction: column;
+    /* Reset margins/padding from previous styles */
+    margin: 0;
+    border: none;
+}
+
+    /* When Javascript adds 'active', slide it in */
+    .filter-panel.active {
+        right: 0;
+    }
+
+/* Internal Layout of Filter Panel */
+.filter-header {
+    padding: 25px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 25px;
+    display: block; /* Override grid if set previously */
+}
+
+.filter-actions {
+    padding: 20px;
+    background: #f9fafb;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+/* =========================================
+   2. FORCE CENTER MODAL (Inspect Window)
+   ========================================= */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Darker background */
+    z-index: 3000; /* Highest priority */
+    /* FLEXBOX CENTERING MAGIC */
+    display: none; /* Reset display */
+    align-items: center; /* Vertical Center */
+    justify-content: center; /* Horizontal Center */
+    padding: 20px;
+}
+
+    .modal.active {
+        display: flex !important; /* Force Flexbox when active */
+    }
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 600px; /* Max width for detail view */
+    max-height: 85vh; /* Prevent it getting too tall */
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow-y: auto; /* Scroll inside if too tall */
+    /* Reset margins to ensure centering */
+    margin: 0 auto;
+    position: relative;
+    animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+/* =========================================
+   FIX: CENTER MODAL PERFECTLY
+   ========================================= */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    z-index: 3000;
+    /* Centering Magic */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+    /* When active, show it with Flexbox */
+    .modal.active {
+        display: flex !important;
+        opacity: 1;
+    }
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh; /* Prevent overflowing screen */
+    overflow-y: auto; /* Scroll inside if too tall */
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    margin: auto; /* Important for flex centering */
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+/* =========================================
+   SETTINGS PAGE: TOGGLE SWITCHES
+   ========================================= */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+input:checked + .slider {
+    background-color: #4F46E5;
+}
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+/* =========================================
+   DARK MODE STYLES
+   ========================================= */
+body.dark-mode {
+    background-color: #111827;
+    color: #F3F4F6;
+}
+
+    body.dark-mode .sidebar {
+        background-color: #1F2937;
+        border-right: 1px solid #374151;
+    }
+
+    body.dark-mode .sidebar-menu li a {
+        color: #9CA3AF;
+    }
+
+    body.dark-mode .sidebar-menu li.active a {
+        background-color: #374151;
+        color: #fff;
+    }
+
+    body.dark-mode .top-header {
+        background-color: #1F2937;
+        border-bottom: 1px solid #374151;
+    }
+
+        body.dark-mode .top-header h1 {
+            color: #F3F4F6;
+        }
+
+    body.dark-mode .content-card {
+        background-color: #1F2937;
+        border: 1px solid #374151;
+        box-shadow: none;
+        color: #F3F4F6;
+    }
+
+    body.dark-mode .card-header h3 {
+        color: #F3F4F6;
+    }
+
+    body.dark-mode .form-control {
+        background-color: #374151;
+        border-color: #4B5563;
+        color: white;
+    }
+
+    body.dark-mode input,
+    body.dark-mode select {
+        background-color: #374151;
+        color: white;
+        border-color: #4B5563;
+    }
+
+    body.dark-mode .table-responsive,
+    body.dark-mode .data-table th,
+    body.dark-mode .data-table td {
+        border-color: #374151;
+        color: #D1D5DB;
+    }
+
+    body.dark-mode .data-table th {
+        background-color: #374151;
+    }
+
+
+/* =========================================
+   LOGIN PAGE STYLES (New)
+   ========================================= */
+body.login-page {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.login-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    display: flex;
+    overflow: hidden;
+    min-height: 600px;
+}
+
+/* Left Panel */
+.login-left {
+    background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+    width: 45%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+    .login-left::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+    }
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+}
+
+    .brand-logo h1 {
+        font-size: 24px;
+        margin: 0;
+        color: white;
+    }
+
+    .brand-logo span {
+        font-weight: 300;
+    }
+
+.login-illustration {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.illustration-circle {
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 40px;
+}
+
+.login-footer p {
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+/* Right Panel */
+.login-right {
+    width: 55%;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form-container {
+    width: 100%;
+    max-width: 380px;
+}
+
+.form-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+    .form-header h3 {
+        font-size: 26px;
+        color: #1F2937;
+        margin-bottom: 5px;
+    }
+
+    .form-header p {
+        color: #6B7280;
+    }
+
+/* Inputs */
+.input-group {
+    margin-bottom: 20px;
+}
+
+    .input-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #374151;
+        font-size: 14px;
+    }
+
+        .input-group label i {
+            margin-right: 5px;
+            color: #6B7280;
+        }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+        .input-group input:focus {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            outline: none;
+        }
+
+/* Password Toggle */
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #9CA3AF;
+    cursor: pointer;
+}
+
+    .toggle-password:hover {
+        color: #4F46E5;
+    }
+
+/* Options Row */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 13px;
+}
+
+.forgot-password {
+    color: #4F46E5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    color: #374151;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .btn-google:hover {
+        background: #F9FAFB;
+    }
+
+.login-divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+    .login-divider::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+        background: #E5E7EB;
+        z-index: 0;
+    }
+
+    .login-divider span {
+        background: white;
+        padding: 0 10px;
+        color: #9CA3AF;
+        font-size: 13px;
+        position: relative;
+        z-index: 1;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+    }
+
+    .login-left {
+        width: 100%;
+        padding: 30px;
+        min-height: 200px;
+    }
+
+    .login-right {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .login-illustration, .login-footer {
+        display: none;
+    }
+
+    .brand-logo {
+        justify-content: center;
+    }
+}

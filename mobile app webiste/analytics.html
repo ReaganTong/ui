@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <nav class="sidebar">
-        <!-- Same sidebar -->
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
@@ -22,7 +22,7 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        
+
         <div class="sidebar-user">
             <div class="user-avatar">
                 <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
@@ -33,7 +33,7 @@
             </div>
             <div class="user-status online"></div>
         </div>
-        
+
         <ul class="sidebar-menu">
             <li>
                 <a href="index.html">
@@ -59,10 +59,22 @@
                     <span>Map View</span>
                 </a>
             </li>
+            <li>
+                <a href="news.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>News & Alerts</span>
+                </a>
+            </li>
             <li class="active">
                 <a href="analytics.html">
                     <i class="fas fa-chart-bar"></i>
                     <span>Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fas fa-file-download"></i>
+                    <span>Reports & Export</span>
                 </a>
             </li>
             <li>
@@ -72,7 +84,7 @@
                 </a>
             </li>
         </ul>
-        
+
         <div class="sidebar-footer">
             <div class="system-status">
                 <div class="status-indicator active"></div>
@@ -91,90 +103,52 @@
                 <h1>Analytics & Reports</h1>
                 <p class="subtitle">Detailed insights and performance metrics</p>
             </div>
-            
-            <div class="header-right">
-                <div class="date-range-selector">
-                    <button class="btn-date-range active" data-range="week">This Week</button>
-                    <button class="btn-date-range" data-range="month">This Month</button>
-                    <button class="btn-date-range" data-range="quarter">This Quarter</button>
-                    <button class="btn-date-range" data-range="year">This Year</button>
-                </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" id="exportReportBtn">
-                        <i class="fas fa-file-export"></i> Export Report
-                    </button>
-                    <button class="btn btn-primary" id="generateReportBtn">
-                        <i class="fas fa-plus"></i> New Report
-                    </button>
-                </div>
-            </div>
         </header>
 
-        <!-- KPI Summary -->
         <section class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-header">
                     <h6>Response Time</h6>
-                    <span class="kpi-trend up">+12%</span>
+                    <span class="kpi-trend up">--</span>
                 </div>
-                <div class="kpi-value">2.4 <small>hours avg</small></div>
-                <div class="kpi-chart-small">
-                    <canvas id="responseTimeChart" width="150" height="50"></canvas>
-                </div>
+                <div class="kpi-value">0 <small>hours</small></div>
             </div>
-            
+
             <div class="kpi-card">
                 <div class="kpi-header">
                     <h6>Resolution Rate</h6>
-                    <span class="kpi-trend up">+8%</span>
+                    <span class="kpi-trend up">--</span>
                 </div>
-                <div class="kpi-value">94.2<small>%</small></div>
-                <div class="kpi-chart-small">
-                    <canvas id="resolutionRateChart" width="150" height="50"></canvas>
-                </div>
+                <div class="kpi-value">0<small>%</small></div>
             </div>
-            
+
             <div class="kpi-card">
                 <div class="kpi-header">
                     <h6>User Satisfaction</h6>
-                    <span class="kpi-trend down">-3%</span>
+                    <span class="kpi-trend down">--</span>
                 </div>
-                <div class="kpi-value">4.2 <small>/ 5.0</small></div>
-                <div class="kpi-chart-small">
-                    <canvas id="satisfactionChart" width="150" height="50"></canvas>
-                </div>
+                <div class="kpi-value">0 <small>/ 5.0</small></div>
             </div>
-            
+
             <div class="kpi-card">
                 <div class="kpi-header">
                     <h6>Active Reports</h6>
-                    <span class="kpi-trend up">+5%</span>
+                    <span class="kpi-trend up">--</span>
                 </div>
-                <div class="kpi-value">23</div>
-                <div class="kpi-chart-small">
-                    <canvas id="activeReportsChart" width="150" height="50"></canvas>
-                </div>
+                <div class="kpi-value">0</div>
             </div>
         </section>
 
-        <!-- Main Charts Section -->
         <section class="analytics-grid">
-            <!-- Incident Trends -->
             <div class="analytics-card wide">
                 <div class="card-header">
                     <h3><i class="fas fa-chart-line"></i> Incident Trends Over Time</h3>
-                    <select id="trendMetric">
-                        <option value="count">Incident Count</option>
-                        <option value="severity">Average Severity</option>
-                        <option value="response">Response Time</option>
-                    </select>
                 </div>
                 <div class="chart-container">
                     <canvas id="incidentTrendChart" width="800" height="300"></canvas>
                 </div>
             </div>
 
-            <!-- Category Distribution -->
             <div class="analytics-card">
                 <div class="card-header">
                     <h3><i class="fas fa-chart-pie"></i> Category Distribution</h3>
@@ -183,78 +157,8 @@
                     <canvas id="categoryDistributionChart" width="400" height="300"></canvas>
                 </div>
             </div>
-
-            <!-- Time of Day Analysis -->
-            <div class="analytics-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-clock"></i> Peak Reporting Times</h3>
-                </div>
-                <div class="chart-container">
-                    <canvas id="timeOfDayChart" width="400" height="300"></canvas>
-                </div>
-            </div>
-
-            <!-- Location Heatmap -->
-            <div class="analytics-card wide">
-                <div class="card-header">
-                    <h3><i class="fas fa-map"></i> Incident Density by Location</h3>
-                </div>
-                <div class="heatmap-container">
-                    <div class="campus-map">
-                        <!-- Simplified campus map SVG or div -->
-                        <div class="building" data-building="library" style="top: 20%; left: 30%;" data-count="24">
-                            <div class="building-label">Library</div>
-                            <div class="heat-indicator high"></div>
-                        </div>
-                        <div class="building" data-building="science" style="top: 40%; left: 50%;" data-count="18">
-                            <div class="building-label">Science Bldg</div>
-                            <div class="heat-indicator medium"></div>
-                        </div>
-                        <div class="building" data-building="dorm-a" style="top: 60%; left: 20%;" data-count="12">
-                            <div class="building-label">Dorm A</div>
-                            <div class="heat-indicator low"></div>
-                        </div>
-                        <!-- More buildings -->
-                    </div>
-                    <div class="heatmap-legend">
-                        <div class="legend-item">
-                            <div class="heat-color high"></div>
-                            <span>High Density (20+ incidents)</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="heat-color medium"></div>
-                            <span>Medium (10-20 incidents)</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="heat-color low"></div>
-                            <span>Low (0-10 incidents)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Department Comparison -->
-            <div class="analytics-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-university"></i> By Department</h3>
-                </div>
-                <div class="chart-container">
-                    <canvas id="departmentChart" width="400" height="300"></canvas>
-                </div>
-            </div>
-
-            <!-- Resolution Time Analysis -->
-            <div class="analytics-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-stopwatch"></i> Resolution Time</h3>
-                </div>
-                <div class="chart-container">
-                    <canvas id="resolutionTimeChart" width="400" height="300"></canvas>
-                </div>
-            </div>
         </section>
 
-        <!-- Data Tables -->
         <section class="data-tables">
             <div class="content-card">
                 <div class="card-header">
@@ -266,22 +170,9 @@
                             <tr>
                                 <th>Location</th>
                                 <th>Total Incidents</th>
-                                <th>Pending</th>
-                                <th>Avg Severity</th>
-                                <th>Avg Response Time</th>
-                                <th>Trend</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Main Library</td>
-                                <td>24</td>
-                                <td>5</td>
-                                <td>Medium</td>
-                                <td>2.1 hours</td>
-                                <td><span class="trend-up">↗ Increasing</span></td>
-                            </tr>
-                            <!-- More rows -->
                         </tbody>
                     </table>
                 </div>
@@ -297,20 +188,9 @@
                             <tr>
                                 <th>User</th>
                                 <th>Reports</th>
-                                <th>Responses</th>
-                                <th>Avg Rating</th>
-                                <th>Last Activity</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John Doe (S12345)</td>
-                                <td>12</td>
-                                <td>8</td>
-                                <td>4.5/5.0</td>
-                                <td>Today</td>
-                            </tr>
-                            <!-- More rows -->
                         </tbody>
                     </table>
                 </div>
@@ -318,95 +198,7 @@
         </section>
     </main>
 
-    <!-- Report Generator Modal -->
-    <div class="modal modal-lg" id="reportGeneratorModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Generate Custom Report</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="reportForm">
-                    <div class="form-group">
-                        <label for="reportName">Report Name</label>
-                        <input type="text" id="reportName" placeholder="Monthly Safety Report" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="reportPeriod">Period</label>
-                            <select id="reportPeriod">
-                                <option value="custom">Custom Range</option>
-                                <option value="week">Last Week</option>
-                                <option value="month">Last Month</option>
-                                <option value="quarter">Last Quarter</option>
-                                <option value="year">Last Year</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="reportFormat">Format</label>
-                            <select id="reportFormat">
-                                <option value="pdf">PDF</option>
-                                <option value="excel">Excel</option>
-                                <option value="html">HTML</option>
-                                <option value="csv">CSV</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Sections to Include</label>
-                        <div class="checkbox-grid">
-                            <label class="checkbox-container">
-                                <input type="checkbox" checked>
-                                <span class="checkmark"></span>
-                                Executive Summary
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" checked>
-                                <span class="checkmark"></span>
-                                Incident Trends
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" checked>
-                                <span class="checkmark"></span>
-                                Category Analysis
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                                Response Times
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                                User Activity
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" checked>
-                                <span class="checkmark"></span>
-                                Recommendations
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="reportNotes">Additional Notes</label>
-                        <textarea id="reportNotes" rows="3" placeholder="Add any specific notes or instructions..."></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary modal-close">Cancel</button>
-                <button class="btn btn-primary" id="generateReportBtn">
-                    <i class="fas fa-magic"></i> Generate Report
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
     <script src="js/analytics.js"></script>
 </body>
 </html>

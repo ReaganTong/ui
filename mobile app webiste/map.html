@@ -5,56 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map View - Campus Safety Admin</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
             height: 600px;
+            width: 100%;
             border-radius: 12px;
-            margin-top: 20px;
             z-index: 1;
         }
-        .leaflet-popup-content {
-            min-width: 250px;
+
+        .map-container {
+            position: relative;
+            height: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .map-controls {
+        /* Custom Marker Styles */
+        .custom-div-icon {
+            background: transparent;
+            border: none;
+        }
+
+        .marker-pin {
+            width: 30px;
+            height: 30px;
+            border-radius: 50% 50% 50% 0;
+            background: #EF4444;
             position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        .map-legend {
-            position: absolute;
-            bottom: 30px;
-            left: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .legend-item {
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -15px 0 0 -15px;
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            justify-content: center;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
         }
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin-right: 10px;
+
+            .marker-pin::after {
+                content: '';
+                width: 14px;
+                height: 14px;
+                margin: 6px 0 0 7px; /* Center dot manually */
+                background: #fff;
+                position: absolute;
+                border-radius: 50%;
+            }
+
+            .marker-pin i {
+                transform: rotate(45deg); /* Counter-rotate icon */
+                color: white;
+                font-size: 12px;
+                z-index: 2;
+            }
+
+        /* Sidebar Item Active State */
+        .map-incident-item {
+            cursor: pointer;
+            transition: background 0.2s;
         }
+
+            .map-incident-item:hover {
+                background: #f3f4f6;
+            }
     </style>
 </head>
 <body>
     <nav class="sidebar">
-        <!-- Same sidebar -->
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
@@ -64,7 +84,7 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        
+
         <div class="sidebar-user">
             <div class="user-avatar">
                 <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
@@ -75,46 +95,28 @@
             </div>
             <div class="user-status online"></div>
         </div>
-        
+
         <ul class="sidebar-menu">
-            <li>
-                <a href="index.html">
-                    <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="incidents.html">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>Incidents</span>
-                </a>
-            </li>
-            <li>
-                <a href="users.html">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span>
-                </a>
-            </li>
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+            <li><a href="incidents.html"><i class="fas fa-exclamation-triangle"></i><span>Incidents</span></a></li>
+            <li><a href="users.html"><i class="fas fa-users"></i><span>Users</span></a></li>
             <li class="active">
                 <a href="map.html">
                     <i class="fas fa-map-marked-alt"></i>
                     <span>Map View</span>
                 </a>
             </li>
+            <li><a href="news.html"><i class="fas fa-bullhorn"></i><span>News & Alerts</span></a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
             <li>
-                <a href="analytics.html">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
+                <a href="reports.html">
+                    <i class="fas fa-file-download"></i>
+                    <span>Reports & Export</span>
                 </a>
             </li>
-            <li>
-                <a href="settings.html">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
         </ul>
-        
+
         <div class="sidebar-footer">
             <div class="system-status">
                 <div class="status-indicator active"></div>
@@ -130,172 +132,53 @@
     <main class="main-content">
         <header class="top-header">
             <div class="header-left">
-                <h1>Campus Map View</h1>
-                <p class="subtitle">Visualize incidents and resources across campus</p>
+                <h1>Campus Map</h1>
+                <p class="subtitle">Live view of reported incidents</p>
             </div>
-            
+
             <div class="header-right">
-                <div class="header-actions">
-                    <div class="map-time-selector">
-                        <select id="timeRange">
-                            <option value="today">Today</option>
-                            <option value="week">This Week</option>
-                            <option value="month">This Month</option>
-                            <option value="all">All Time</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-secondary" id="refreshMap">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
+                <button class="btn btn-secondary" id="refreshMapBtn">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
             </div>
         </header>
 
-        <!-- Map Controls -->
-        <div class="map-controls">
-            <h5><i class="fas fa-filter"></i> Map Filters</h5>
-            
-            <div class="filter-section">
-                <label>Incident Status</label>
-                <div class="filter-options">
+        <div style="display: flex; gap: 20px; height: calc(100vh - 140px); min-height: 600px;">
+
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                <div class="content-card" style="padding: 15px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                    <div style="font-weight: 600; color: #374151;"><i class="fas fa-filter"></i> Filters:</div>
+
                     <label class="filter-checkbox">
-                        <input type="checkbox" name="mapStatus" value="pending" checked>
-                        <span class="checkmark"></span>
-                        Pending
+                        <input type="checkbox" name="mapStatus" value="pending" checked> Pending
                     </label>
                     <label class="filter-checkbox">
-                        <input type="checkbox" name="mapStatus" value="investigating" checked>
-                        <span class="checkmark"></span>
-                        Investigating
+                        <input type="checkbox" name="mapStatus" value="investigating" checked> Investigating
                     </label>
                     <label class="filter-checkbox">
-                        <input type="checkbox" name="mapStatus" value="resolved">
-                        <span class="checkmark"></span>
-                        Resolved
+                        <input type="checkbox" name="mapStatus" value="resolved"> Resolved
                     </label>
                 </div>
-            </div>
-            
-            <div class="filter-section">
-                <label>Incident Type</label>
-                <div class="filter-options">
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="mapType" value="hazard" checked>
-                        <span class="checkmark"></span>
-                        Hazards
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="mapType" value="security" checked>
-                        <span class="checkmark"></span>
-                        Security
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="mapType" value="maintenance" checked>
-                        <span class="checkmark"></span>
-                        Maintenance
-                    </label>
+
+                <div class="map-container">
+                    <div id="map"></div>
                 </div>
             </div>
-            
-            <div class="filter-section">
-                <label>Show Resources</label>
-                <div class="filter-options">
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="resources" value="emergency" checked>
-                        <span class="checkmark"></span>
-                        Emergency Phones
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="resources" value="firstaid" checked>
-                        <span class="checkmark"></span>
-                        First Aid Stations
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="resources" value="security" checked>
-                        <span class="checkmark"></span>
-                        Security Offices
-                    </label>
+
+            <div class="content-card" style="width: 320px; display: flex; flex-direction: column; padding: 0;">
+                <div class="card-header" style="padding: 20px; border-bottom: 1px solid #eee; margin-bottom: 0;">
+                    <h3><i class="fas fa-list"></i> Incidents</h3>
                 </div>
-            </div>
-            
-            <button class="btn btn-primary btn-sm" id="applyMapFilters">
-                <i class="fas fa-check"></i> Apply Filters
-            </button>
-        </div>
-
-        <!-- Map Legend -->
-        <div class="map-legend">
-            <h5><i class="fas fa-key"></i> Legend</h5>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #EF4444;"></div>
-                <span>High Severity</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #F59E0B;"></div>
-                <span>Medium Severity</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #10B981;"></div>
-                <span>Low Severity</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #3B82F6; border: 2px solid #1D4ED8;"></div>
-                <span>Security Resources</span>
-            </div>
-        </div>
-
-        <!-- Map Container -->
-        <div id="map"></div>
-
-        <!-- Incident List Sidebar -->
-        <div class="map-sidebar">
-            <div class="map-sidebar-header">
-                <h4><i class="fas fa-list"></i> Nearby Incidents</h4>
-                <button class="map-sidebar-toggle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-            </div>
-            <div class="map-sidebar-content">
-                <div class="incident-list">
-                    <div class="map-incident-item">
-                        <div class="incident-marker high"></div>
-                        <div class="incident-content">
-                            <h6>Broken glass near Library</h6>
-                            <p>Main library entrance • 10:30 AM</p>
-                            <span class="status-badge status-pending">Pending</span>
-                        </div>
-                        <button class="btn-view-on-map" data-id="1">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </button>
+                <div class="incident-list" id="mapSidebarList" style="flex: 1; overflow-y: auto; padding: 10px;">
+                    <div style="text-align: center; padding: 20px; color: #666;">
+                        <i class="fas fa-spinner fa-spin"></i> Loading...
                     </div>
-                    <!-- More incidents loaded by JavaScript -->
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Incident Popup Template -->
-    <template id="popupTemplate">
-        <div class="map-popup">
-            <h5>{title}</h5>
-            <p><i class="fas fa-map-marker-alt"></i> {location}</p>
-            <p><i class="fas fa-clock"></i> {time}</p>
-            <div class="popup-status">
-                <span class="status-badge {statusClass}">{status}</span>
-                <span class="severity-badge {severityClass}">{severity}</span>
-            </div>
-            <p class="popup-description">{description}</p>
-            <div class="popup-actions">
-                <button class="btn btn-sm btn-primary view-details" data-id="{id}">
-                    <i class="fas fa-eye"></i> View Details
-                </button>
-                <button class="btn btn-sm btn-secondary navigate-to" data-lat="{lat}" data-lng="{lng}">
-                    <i class="fas fa-directions"></i> Navigate
-                </button>
-            </div>
-        </div>
-    </template>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/app.js"></script>
     <script src="js/map.js"></script>

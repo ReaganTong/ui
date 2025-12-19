@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Export - Campus Safety</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Loading Spinner Animation */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Campus<span>Safety</span></h2>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
+            </div>
+            <div class="user-info">
+                <h4>Admin User</h4>
+                <p>Super Administrator</p>
+            </div>
+            <div class="user-status online"></div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+            <li><a href="incidents.html"><i class="fas fa-exclamation-triangle"></i><span>Incidents</span></a></li>
+            <li><a href="users.html"><i class="fas fa-users"></i><span>Users</span></a></li>
+            <li><a href="map.html"><i class="fas fa-map-marked-alt"></i><span>Map View</span></a></li>
+            <li><a href="news.html"><i class="fas fa-bullhorn"></i><span>News & Alerts</span></a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+            <li class="active"><a href="reports.html"><i class="fas fa-file-download"></i><span>Reports & Export</span></a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="system-status">
+                <div class="status-indicator active"></div>
+                <span>System Online</span>
+            </div>
+            <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Reports Center</h1>
+                <p class="subtitle">Download analytics and incident data</p>
+            </div>
+        </header>
+
+        <section class="content-grid">
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Monthly Analytics</h3>
+                </div>
+                <div style="padding: 10px 0;">
+                    <p style="color:#666; margin-bottom: 20px;">Download a summary (stats & counts) for a specific month.</p>
+
+                    <div class="form-group">
+                        <label>Select Month:</label>
+                        <input type="month" id="reportMonth" class="form-control" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px;">
+                    </div>
+
+                    <button class="btn btn-primary" id="btnDownloadMonthly" onclick="downloadMonthlyReport()" style="width:100%;">
+                        <i class="fas fa-file-csv"></i> Download Summary (CSV)
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-database"></i> Full Data Export</h3>
+                </div>
+                <div style="padding: 10px 0;">
+                    <p style="color:#666; margin-bottom: 20px;">Export every single incident report ever recorded.</p>
+
+                    <div style="background:#f3f4f6; padding:15px; border-radius:8px; margin-bottom:20px;">
+                        <div style="font-weight:bold; color:#374151;">Total Records:</div>
+                        <div style="font-size:24px; color:#4F46E5;" id="totalRecordsCount">Loading...</div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="btnDownloadAll" onclick="downloadAllReports()" style="width:100%;">
+                        <i class="fas fa-download"></i> Download All Reports
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            console.log("Reports page initializing...");
+
+            // Set current month in picker
+            const dateInput = document.getElementById('reportMonth');
+            const now = new Date();
+            const monthStr = now.toISOString().slice(0, 7);
+            if (dateInput) dateInput.value = monthStr;
+
+            // Wait for Supabase to be ready
+            setTimeout(loadTotalCount, 500);
+        });
+
+        async function loadTotalCount() {
+            const el = document.getElementById('totalRecordsCount');
+
+            if (!window.supabaseClient) {
+                el.textContent = "DB Error";
+                console.error("Supabase not found. Check js/app.js");
+                return;
+            }
+
+            try {
+                // Fetch count
+                const { count, error } = await window.supabaseClient
+                    .from('reports')
+                    .select('*', { count: 'exact', head: true });
+
+                if (error) throw error;
+
+                el.textContent = count;
+
+            } catch (e) {
+                console.error("Error loading count:", e);
+                el.textContent = "Error";
+                alert("Database connection failed. Check console for details.");
+            }
+        }
+
+        // --- DOWNLOAD MONTHLY ---
+        async function downloadMonthlyReport() {
+            const monthInput = document.getElementById('reportMonth').value;
+            if (!monthInput) return alert("Please select a month");
+
+            const btn = document.getElementById('btnDownloadMonthly');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span> Generating...';
+            btn.disabled = true;
+
+            try {
+                const { data: reports, error } = await window.supabaseClient.from('reports').select('*');
+                if (error) throw error;
+
+                // Filter by month
+                const filtered = reports.filter(r => r.created_at.startsWith(monthInput));
+
+                if (filtered.length === 0) {
+                    alert("No reports found for this month.");
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Stats
+                const total = filtered.length;
+                const resolved = filtered.filter(r => (r.status || '').toLowerCase() === 'resolved').length;
+                const pending = filtered.filter(r => (r.status || '').toLowerCase() === 'pending').length;
+
+                // CSV Data
+                let csv = `REPORT FOR ${monthInput}\n`;
+                csv += `Total,${total}\nResolved,${resolved}\nPending,${pending}\n\n`;
+                csv += `ID,Date,Category,Status,Description\n`;
+
+                filtered.forEach(r => {
+                    const desc = `"${(r.description || '').replace(/"/g, '""')}"`;
+                    csv += `${r.id},${r.created_at},${r.category},${r.status},${desc}\n`;
+                });
+
+                downloadCSV(csv, `Analytics_${monthInput}.csv`);
+
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
+        }
+
+        // --- DOWNLOAD ALL ---
+        async function downloadAllReports() {
+            const btn = document.getElementById('btnDownloadAll');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span> Downloading...';
+            btn.disabled = true;
+
+            try {
+                const { data: reports, error } = await window.supabaseClient
+                    .from('reports')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!reports || reports.length === 0) {
+                    alert("No data found.");
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    return;
+                }
+
+                let csv = `ID,Date,Category,Status,Severity,Location,Student,Description,Image\n`;
+                reports.forEach(r => {
+                    const desc = `"${(r.description || '').replace(/"/g, '""')}"`;
+                    const loc = `"${(r.location || '').replace(/"/g, '""')}"`;
+                    csv += `${r.id},${r.created_at},${r.category},${r.status},${r.severity},${loc},${r.student_id},${desc},${r.image_url}\n`;
+                });
+
+                downloadCSV(csv, `Full_Export_${new Date().toISOString().split('T')[0]}.csv`);
+
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
+        }
+
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>

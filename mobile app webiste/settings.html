@@ -10,76 +10,42 @@
 </head>
 <body>
     <nav class="sidebar">
-        <!-- Same sidebar -->
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
                 <h2>Campus<span>Safety</span></h2>
             </div>
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         </div>
-        
+
         <div class="sidebar-user">
             <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" alt="Admin" id="sidebarAvatar">
             </div>
             <div class="user-info">
-                <h4>Admin User</h4>
-                <p>Super Administrator</p>
+                <h4 id="sidebarName">Admin User</h4>
+                <p id="sidebarRole">Super Administrator</p>
             </div>
             <div class="user-status online"></div>
         </div>
-        
+
         <ul class="sidebar-menu">
-            <li>
-                <a href="index.html">
-                    <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="incidents.html">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>Incidents</span>
-                </a>
-            </li>
-            <li>
-                <a href="users.html">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span>
-                </a>
-            </li>
-            <li>
-                <a href="map.html">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span>Map View</span>
-                </a>
-            </li>
-            <li>
-                <a href="analytics.html">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="settings.html">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+            <li><a href="incidents.html"><i class="fas fa-exclamation-triangle"></i><span>Incidents</span></a></li>
+            <li><a href="users.html"><i class="fas fa-users"></i><span>Users</span></a></li>
+            <li><a href="map.html"><i class="fas fa-map-marked-alt"></i><span>Map View</span></a></li>
+            <li><a href="news.html"><i class="fas fa-bullhorn"></i><span>News & Alerts</span></a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+            <li><a href="reports.html"><i class="fas fa-file-download"></i><span>Reports & Export</span></a></li>
+            <li class="active"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
         </ul>
-        
+
         <div class="sidebar-footer">
             <div class="system-status">
                 <div class="status-indicator active"></div>
                 <span>System Online</span>
             </div>
-            <button class="btn-logout" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
+            <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
         </div>
     </nav>
 
@@ -87,426 +53,75 @@
         <header class="top-header">
             <div class="header-left">
                 <h1>System Settings</h1>
-                <p class="subtitle">Configure system preferences and administration</p>
+                <p class="subtitle">Manage profile, appearance, and security</p>
             </div>
-            
             <div class="header-right">
-                <div class="header-actions">
-                    <button class="btn btn-secondary" id="saveSettingsBtn">
-                        <i class="fas fa-save"></i> Save All Changes
-                    </button>
-                </div>
+                <button class="btn btn-primary" id="saveAllBtn">
+                    <i class="fas fa-save"></i> Save All Changes
+                </button>
             </div>
         </header>
 
-        <!-- Settings Tabs -->
-        <div class="settings-tabs">
-            <button class="settings-tab active" data-tab="general">
-                <i class="fas fa-sliders-h"></i> General
-            </button>
-            <button class="settings-tab" data-tab="notifications">
-                <i class="fas fa-bell"></i> Notifications
-            </button>
-            <button class="settings-tab" data-tab="security">
-                <i class="fas fa-shield-alt"></i> Security
-            </button>
-            <button class="settings-tab" data-tab="integrations">
-                <i class="fas fa-plug"></i> Integrations
-            </button>
-            <button class="settings-tab" data-tab="api">
-                <i class="fas fa-code"></i> API
-            </button>
-            <button class="settings-tab" data-tab="backup">
-                <i class="fas fa-database"></i> Backup
-            </button>
-            <button class="settings-tab" data-tab="users">
-                <i class="fas fa-users-cog"></i> User Management
-            </button>
-        </div>
+        <section class="content-grid">
 
-        <!-- Settings Content -->
-        <div class="settings-content">
-            <!-- General Settings -->
-            <div class="settings-pane active" id="generalPane">
-                <div class="settings-card">
-                    <h4><i class="fas fa-globe"></i> System Preferences</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label for="systemName">System Name</label>
-                            <input type="text" id="systemName" value="Campus Safety System">
-                        </div>
-                        <div class="setting-item">
-                            <label for="timezone">Timezone</label>
-                            <select id="timezone">
-                                <option value="America/New_York" selected>Eastern Time (ET)</option>
-                                <option value="America/Chicago">Central Time (CT)</option>
-                                <option value="America/Denver">Mountain Time (MT)</option>
-                                <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label for="dateFormat">Date Format</label>
-                            <select id="dateFormat">
-                                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Enable Maintenance Mode</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="maintenanceMode">
-                                <span class="slider"></span>
-                            </label>
-                            <small class="setting-hint">When enabled, only administrators can access the system</small>
-                        </div>
-                    </div>
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-circle"></i> Profile Settings</h3>
                 </div>
-
-                <div class="settings-card">
-                    <h4><i class="fas fa-paint-brush"></i> Appearance</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label>Theme</label>
-                            <div class="theme-selector">
-                                <div class="theme-option active" data-theme="light">
-                                    <div class="theme-preview light"></div>
-                                    <span>Light</span>
-                                </div>
-                                <div class="theme-option" data-theme="dark">
-                                    <div class="theme-preview dark"></div>
-                                    <span>Dark</span>
-                                </div>
-                                <div class="theme-option" data-theme="auto">
-                                    <div class="theme-preview auto"></div>
-                                    <span>Auto</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="setting-item">
-                            <label>Primary Color</label>
-                            <div class="color-picker">
-                                <input type="color" id="primaryColor" value="#4F46E5">
-                                <span class="color-value">#4F46E5</span>
-                            </div>
-                        </div>
-                        <div class="setting-item">
-                            <label>Dashboard Layout</label>
-                            <select id="dashboardLayout">
-                                <option value="grid">Grid</option>
-                                <option value="list">List</option>
-                                <option value="compact">Compact</option>
-                            </select>
+                <div style="padding: 20px;">
+                    <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4F46E5&color=fff" id="settingsAvatar" style="width: 80px; height: 80px; border-radius: 50%;">
+                        <div>
+                            <button class="btn btn-secondary" style="font-size: 12px;">Change Photo</button>
                         </div>
                     </div>
+
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="inputName" class="form-control" value="Admin User" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="inputEmail" class="form-control" value="admin@campussafety.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            <!-- Notifications Settings -->
-            <div class="settings-pane" id="notificationsPane">
-                <div class="settings-card">
-                    <h4><i class="fas fa-bell"></i> Notification Preferences</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label>Email Notifications</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="emailNotifications" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <label>Push Notifications</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="pushNotifications" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <label>SMS Alerts</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="smsNotifications">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="settings-card">
-                    <h4><i class="fas fa-cog"></i> Notification Rules</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label>Notify for High Severity</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="notifyHighSeverity" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <label>Notify for New Users</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="notifyNewUsers">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <label>Daily Digest Email</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="dailyDigest" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <small class="setting-hint">Send summary of daily activities at 6:00 PM</small>
-                        </div>
-                        <div class="setting-item">
-                            <label>Quiet Hours</label>
-                            <div class="time-range">
-                                <input type="time" id="quietStart" value="22:00">
-                                <span>to</span>
-                                <input type="time" id="quietEnd" value="07:00">
-                            </div>
-                            <small class="setting-hint">No notifications will be sent during these hours</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Security Settings -->
-            <div class="settings-pane" id="securityPane">
-                <div class="settings-card">
-                    <h4><i class="fas fa-lock"></i> Security & Authentication</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label>Two-Factor Authentication</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="twoFactorAuth" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <small class="setting-hint">Require 2FA for all admin accounts</small>
-                        </div>
-                        <div class="setting-item">
-                            <label>Session Timeout</label>
-                            <select id="sessionTimeout">
-                                <option value="15">15 minutes</option>
-                                <option value="30">30 minutes</option>
-                                <option value="60" selected>1 hour</option>
-                                <option value="120">2 hours</option>
-                                <option value="240">4 hours</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Password Policy</label>
-                            <select id="passwordPolicy">
-                                <option value="basic">Basic (8+ characters)</option>
-                                <option value="medium" selected>Medium (12+ chars, mixed case)</option>
-                                <option value="strong">Strong (14+ chars, special chars)</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Failed Login Attempts</label>
-                            <div class="range-setting">
-                                <input type="range" id="failedAttempts" min="1" max="10" value="5">
-                                <span id="attemptsValue">5 attempts</span>
-                            </div>
-                            <small class="setting-hint">Account lockout after failed attempts</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="settings-card">
-                    <h4><i class="fas fa-history"></i> Audit Log</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label>Enable Audit Logging</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="auditLogging" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <label>Log Retention</label>
-                            <select id="logRetention">
-                                <option value="30">30 days</option>
-                                <option value="90" selected>90 days</option>
-                                <option value="180">180 days</option>
-                                <option value="365">1 year</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Log Detail Level</label>
-                            <select id="logDetail">
-                                <option value="minimal">Minimal</option>
-                                <option value="normal" selected>Normal</option>
-                                <option value="verbose">Verbose</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Integrations Settings -->
-            <div class="settings-pane" id="integrationsPane">
-                <div class="settings-card">
-                    <h4><i class="fas fa-plug"></i> Third-Party Integrations</h4>
-                    <div class="integration-list">
-                        <div class="integration-item">
-                            <div class="integration-info">
-                                <div class="integration-icon">
-                                    <i class="fab fa-slack"></i>
-                                </div>
-                                <div class="integration-details">
-                                    <h5>Slack</h5>
-                                    <p>Send incident alerts to Slack channels</p>
-                                </div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="slackIntegration">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-
-                        <div class="integration-item">
-                            <div class="integration-info">
-                                <div class="integration-icon">
-                                    <i class="fas fa-sms"></i>
-                                </div>
-                                <div class="integration-details">
-                                    <h5>Twilio SMS</h5>
-                                    <p>Send emergency alerts via SMS</p>
-                                </div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="twilioIntegration">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-
-                        <div class="integration-item">
-                            <div class="integration-info">
-                                <div class="integration-icon">
-                                    <i class="fas fa-map-marked-alt"></i>
-                                </div>
-                                <div class="integration-details">
-                                    <h5>Google Maps</h5>
-                                    <p>Enhanced mapping and geolocation</p>
-                                </div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="googleMapsIntegration" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-
-                        <div class="integration-item">
-                            <div class="integration-info">
-                                <div class="integration-icon">
-                                    <i class="fas fa-calendar-alt"></i>
-                                </div>
-                                <div class="integration-details">
-                                    <h5>Calendar Integration</h5>
-                                    <p>Sync with Google Calendar or Outlook</p>
-                                </div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="calendarIntegration">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- API Settings -->
-            <div class="settings-pane" id="apiPane">
-                <div class="settings-card">
-                    <h4><i class="fas fa-code"></i> API Configuration</h4>
-                    <div class="settings-group">
-                        <div class="setting-item">
-                            <label>API Status</label>
-                            <span class="status-badge status-active">Active</span>
-                        </div>
-                        <div class="setting-item">
-                            <label>API Version</label>
-                            <span class="api-version">v2.1.0</span>
-                        </div>
-                        <div class="setting-item">
-                            <label>API Base URL</label>
-                            <code class="api-url">https://api.campussafety.edu/v2</code>
-                        </div>
-                        <div class="setting-item">
-                            <label>Rate Limiting</label>
-                            <select id="rateLimit">
-                                <option value="100">100 requests/minute</option>
-                                <option value="500" selected>500 requests/minute</option>
-                                <option value="1000">1000 requests/minute</option>
-                                <option value="unlimited">Unlimited</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="settings-card">
-                    <h4><i class="fas fa-key"></i> API Keys</h4>
-                    <div class="api-keys-list">
-                        <div class="api-key-item">
-                            <div class="api-key-info">
-                                <h6>Production Key</h6>
-                                <small>Created: Dec 1, 2025</small>
-                            </div>
-                            <div class="api-key-actions">
-                                <button class="btn-action" title="Copy">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                                <button class="btn-action" title="Regenerate">
-                                    <i class="fas fa-redo"></i>
-                                </button>
-                                <button class="btn-action" title="Revoke">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-sm" id="generateApiKey">
-                        <i class="fas fa-plus"></i> Generate New API Key
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Danger Zone -->
-        <div class="danger-zone">
-            <h4><i class="fas fa-exclamation-triangle"></i> Danger Zone</h4>
-            <p>These actions are irreversible. Please proceed with caution.</p>
             
-            <div class="danger-actions">
-                <button class="btn btn-danger" id="clearAllDataBtn">
-                    <i class="fas fa-trash"></i> Clear All Data
-                </button>
-                <button class="btn btn-danger" id="resetSystemBtn">
-                    <i class="fas fa-redo"></i> Reset System
-                </button>
-                <button class="btn btn-danger" id="deleteAccountBtn">
-                    <i class="fas fa-user-slash"></i> Delete Account
-                </button>
+
+            <div class="content-card wide">
+                <div class="card-header">
+                    <h3><i class="fas fa-lock"></i> Security</h3>
+                </div>
+                <div style="padding: 20px;">
+                    <form id="securityForm">
+                        <div class="form-row" style="display: flex; gap: 20px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Current Password</label>
+                                <input type="password" id="currentPass" class="form-control" placeholder="••••••••" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>New Password</label>
+                                <input type="password" id="newPass" class="form-control" placeholder="New password" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Confirm Password</label>
+                                <input type="password" id="confirmPass" class="form-control" placeholder="Confirm new password" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            </div>
+                        </div>
+                        <div style="text-align: right; margin-top: 15px;">
+                            <button type="button" class="btn btn-primary" id="updatePassBtn">Update Password</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+
+        </section>
     </main>
 
-    <!-- Confirmation Modal for Dangerous Actions -->
-    <div class="modal" id="confirmationModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-exclamation-triangle text-danger"></i> Confirm Action</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p id="confirmationMessage">Are you sure you want to perform this action? This cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary modal-close">Cancel</button>
-                <button class="btn btn-danger" id="confirmActionBtn">Confirm</button>
-            </div>
-        </div>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/app.js"></script>
     <script src="js/settings.js"></script>
 </body>
